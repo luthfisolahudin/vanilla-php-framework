@@ -21,6 +21,8 @@ class Router implements RouterInterface
 
     public function add(string $method, string $uri, string $controller, array $middlewares = []): static
     {
+        $uri = '/'.trim($uri, '/');
+
         $this->routes[$uri][$method] = [
             'middlewares' => $middlewares,
             'controller' => $controller,
