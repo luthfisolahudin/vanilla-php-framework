@@ -7,6 +7,11 @@ use Sys\Http\Router\RouterInterface;
 
 \define('BASE_PATH', \dirname(__DIR__));
 
+mb_internal_encoding('UTF-8');
+error_reporting(-1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
 session_start();
 
 // Optionally load vendor
