@@ -71,13 +71,13 @@ class Router implements RouterInterface
     public function handle(string $uri, string $method): void
     {
         if (! $this->has($uri)) {
-            $this->abort(Status::METHOD_NOT_ALLOWED);
+            $this->abort();
 
             return;
         }
 
         if (! $this->has($uri, $method)) {
-            $this->abort();
+            $this->abort(Status::METHOD_NOT_ALLOWED);
 
             return;
         }
