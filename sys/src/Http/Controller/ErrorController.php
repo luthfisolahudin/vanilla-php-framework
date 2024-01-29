@@ -29,11 +29,11 @@ class ErrorController extends BaseController
 
     protected function view(int $code): string
     {
-        if ($view = $this->config->get("view_errors.{$code}")) {
+        if ($view = $this->config->get("views.errors.{$code}")) {
             return $view;
         }
 
-        if ($view = $this->config->get('view_errors.any')) {
+        if ($view = $this->config->get('views.errors.any')) {
             return $view;
         }
 

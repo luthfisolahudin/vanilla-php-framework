@@ -21,8 +21,8 @@ class View implements ViewInterface
         protected ConfigInterface $config,
         protected ViewEngineInterface $engine,
     ) {
-        $this->defaultFolder = $this->config->get('view_default', app_path('views'));
-        $this->folders = $this->config->get('views', []);
+        $this->defaultFolder = $this->config->get('views.default', app_path('views'));
+        $this->folders = $this->config->get('views.namespaces', []);
     }
 
     public function exists(string $path): bool
