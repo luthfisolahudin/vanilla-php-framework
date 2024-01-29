@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^8",
+        "php": "^8.0",
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-spl": "*"
@@ -22,16 +22,6 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "App\\": "app",
-            "Sys\\": "sys/src"
-        },
-        "files": [
-            "sys/functions.php",
-            "app/functions.php"
-        ]
-    },
     "config": {
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
@@ -49,9 +39,6 @@
     },
     "scripts": {
         "cs": "@php vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer",
-        "cs:check": "@composer run cs -- fix --dry-run --diff",
-        "normalize": "@composer bin composer-normalize normalize ../../composer.json",
-        "scan-ext": "@php vendor-bin/php-code-analyzer/vendor/bin/phpca",
-        "unused": "@php vendor-bin/composer-unused/vendor/bin/composer-unused"
+        "cs:check": "@composer run cs -- fix --dry-run --diff"
     }
 }
