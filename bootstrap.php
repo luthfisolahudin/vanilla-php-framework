@@ -38,7 +38,7 @@ App::setContainer(
         ->alias(ViewInterface::class, View::class)
         ->alias(ViewEngineInterface::class, ViewEngine::class)
         ->singleton(ConfigInterface::class, static function () {
-            $values = array_merge(
+            $values = array_merge_recursive(
                 (@include app_path('config.dist.php')) ?: [],
                 (@include app_path('config.php')) ?: [],
             );
