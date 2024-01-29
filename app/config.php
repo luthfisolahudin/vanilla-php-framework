@@ -8,8 +8,8 @@ return [
     ],
 
     'locale' => [
-        /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang */
-        'default' => 'id'
+        // references https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang
+        'default' => 'id',
     ],
 
     'database' => [
