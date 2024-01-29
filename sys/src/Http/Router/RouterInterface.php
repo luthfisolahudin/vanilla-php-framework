@@ -20,7 +20,7 @@ interface RouterInterface
 
     public function put(string $uri, string $controller, array $middlewares = []): static;
 
-    public function has(string $uri, string $method): bool;
+    public function has(string $uri, ?string $method = null): bool;
 
     public function handle(string $uri, string $method): void;
 
