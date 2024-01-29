@@ -6,4 +6,5 @@
 .php-cs-fixer.php
 
 /vendor
+/vendor-bin/**/vendor/
 composer.phar

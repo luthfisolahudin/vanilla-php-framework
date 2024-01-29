@@ -15,20 +15,29 @@
         "ext-spl": "*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.48",
+        "bamarni/composer-bin-plugin": "^1.8",
         "kint-php/kint": "^5.1",
         "kint-php/kint-helpers": "^5.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
         "optimize-autoloader": true,
         "platform-check": true,
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": false,
+            "forward-command": true
+        }
+    },
     "scripts": {
-        "cs": "php-cs-fixer",
-        "cs-check": "php-cs-fixer fix --dry-run --diff"
+        "cs": "@php vendor-bin/php-cs-fixer/vendor/friendsofphp/php-cs-fixer/php-cs-fixer",
+        "cs-check": "@composer run cs -- fix --dry-run --diff"
     }
 }

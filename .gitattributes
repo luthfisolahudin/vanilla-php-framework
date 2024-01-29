@@ -5,3 +5,5 @@
 *.md diff=markdown
 *.php diff=php
 *.view.php diff=html
+
+/vendor-bin/**/composer.lock binary
