@@ -21,6 +21,16 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "app",
+            "Sys\\": "sys/src"
+        },
+        "files": [
+            "sys/functions.php",
+            "app/functions.php"
+        ]
+    },
     "config": {
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
