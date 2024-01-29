@@ -56,8 +56,12 @@ class Router implements RouterInterface
         return $this->add(Method::PUT, $uri, $controller, $middlewares);
     }
 
-    public function has(string $uri, string $method): bool
+    public function has(string $uri, ?string $method = null): bool
     {
+        if (null === $method) {
+            return \array_key_exists($uri, $this->routes);
+        }
+
         return isset($this->routes[$uri][$method]);
     }
 
@@ -66,6 +70,12 @@ class Router implements RouterInterface
      */
     public function handle(string $uri, string $method): void
     {
+        if (! $this->has($uri)) {
+            $this->abort(Status::METHOD_NOT_ALLOWED);
+
+            return;
+        }
+
         if (! $this->has($uri, $method)) {
             $this->abort();
 
