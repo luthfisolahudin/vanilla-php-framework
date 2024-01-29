@@ -47,7 +47,10 @@
         }
     },
     "scripts": {
-        "cs": "@php vendor-bin/php-cs-fixer/vendor/friendsofphp/php-cs-fixer/php-cs-fixer",
-        "cs-check": "@composer run cs -- fix --dry-run --diff"
+        "cs": "@php vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer",
+        "cs:check": "@composer run cs -- fix --dry-run --diff",
+        "normalize": "@composer bin composer-normalize normalize ../../composer.json",
+        "scan-ext": "@php vendor-bin/php-code-analyzer/vendor/bin/phpca",
+        "unused": "@php vendor-bin/composer-unused/vendor/bin/composer-unused"
     }
 }

@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "wapmorgan/php-code-analyzer": "^1.0"
+    }
+}
