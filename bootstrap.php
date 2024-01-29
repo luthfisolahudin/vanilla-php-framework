@@ -38,7 +38,10 @@ App::setContainer(
         ->alias(ViewInterface::class, View::class)
         ->alias(ViewEngineInterface::class, ViewEngine::class)
         ->singleton(ConfigInterface::class, static function () {
-            $values = require app_path('config.php');
+            $values = array_merge(
+                (@include app_path('config.dist.php')) ?: [],
+                (@include app_path('config.php')) ?: [],
+            );
 
             return (new Config())->load($values);
         })
