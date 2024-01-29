@@ -39,6 +39,6 @@
     },
     "scripts": {
         "cs": "@php vendor-bin/php-cs-fixer/vendor/bin/php-cs-fixer",
-        "cs:check": "@composer run cs -- fix --dry-run --diff"
+        "cs:check": "@cs fix --dry-run --diff"
     }
 }
