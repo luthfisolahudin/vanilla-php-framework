@@ -15,7 +15,9 @@
         "ext-spl": "*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.48"
+        "friendsofphp/php-cs-fixer": "^3.48",
+        "kint-php/kint": "^5.1",
+        "kint-php/kint-helpers": "^5.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
