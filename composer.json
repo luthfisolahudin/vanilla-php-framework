@@ -1,0 +1,32 @@
+{
+    "name": "luthfisolahudin/vanilla-php-framework",
+    "description": "Minimal PHP Framework Concept",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Luthfi Solahudin",
+            "email": "mluthfisk@outlook.com"
+        }
+    ],
+    "require": {
+        "php": "^8",
+        "ext-pdo": "*",
+        "ext-spl": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.48"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "platform-check": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs": "php-cs-fixer",
+        "cs-check": "php-cs-fixer fix --dry-run --diff"
+    }
+}
