@@ -19,7 +19,7 @@ class UserAuthenticator implements AuthenticatorInterface
         return $this->database
             ->query(
                 'select * from users where username = :username and password = :password',
-                ['username' => $username, 'password' => password_hash($password, \PASSWORD_BCRYPT)],
+                [':username' => $username, ':password' => password_hash($password, \PASSWORD_BCRYPT)],
             )
             ->setMap($this->config->get('user', User::class))
             ->fetch();
