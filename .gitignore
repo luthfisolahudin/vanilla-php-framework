@@ -5,8 +5,14 @@
 .php-cs-fixer.cache
 .php-cs-fixer.php
 
-/vendor/
-/vendor-bin/**/vendor/
+**/vendor/
 composer.phar
+
+**/node_modules/
+
+*.log*
+
+.DS_Store
+Thumbs.db
 
 /app/config.php
