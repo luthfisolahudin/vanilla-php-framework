@@ -6,19 +6,19 @@ namespace Sys\Http\Session;
 
 class Session implements SessionInterface
 {
-    public function get(string $key, mixed $default = null): mixed
+    public function get(string $key, mixed $default = null): bool|int|string|null
     {
-        return $_SESSION[static::FLASH_KEY][$key] ?? $_SESSION[$key] ?? $default;
+        return sanitize($_SESSION[static::FLASH_KEY][$key] ?? $_SESSION[$key] ?? $default);
     }
 
     public function set(string $key, mixed $value): static
     {
-        $_SESSION[$key] = $value;
+        $_SESSION[$key] = sanitize($value);
 
         return $this;
     }
 
-    public function unset(string $key): mixed
+    public function unset(string $key): bool|int|string|null
     {
         $value = $this->get($key);
 
@@ -29,18 +29,18 @@ class Session implements SessionInterface
 
     public function flash(string $key, mixed $value): static
     {
-        $_SESSION[static::FLASH_KEY][$key] = $value;
+        $_SESSION[static::FLASH_KEY][$key] = sanitize($value);
 
         return $this;
     }
 
-    public function unflash(?string $key = null): mixed
+    public function unflash(?string $key = null): bool|int|string|null
     {
         if (null === $key) {
             return $this->unset(static::FLASH_KEY);
         }
 
-        $value = $_SESSION[static::FLASH_KEY][$key] ?? null;
+        $value = sanitize($_SESSION[static::FLASH_KEY][$key] ?? null);
 
         unset($_SESSION[static::FLASH_KEY][$key]);
 

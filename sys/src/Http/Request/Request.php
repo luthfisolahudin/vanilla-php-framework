@@ -17,9 +17,9 @@ class Request implements RequestInterface
         protected RouterInterface $router,
     ) {}
 
-    public function get(string $key, mixed $default = null): mixed
+    public function get(string $key, mixed $default = null): bool|int|string|null
     {
-        return $_GET[$key] ?? $_POST[$key] ?? $default;
+        return sanitize($_GET[$key] ?? $_POST[$key] ?? $default);
     }
 
     public function auth(): AuthInterface
