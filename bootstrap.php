@@ -38,12 +38,9 @@ App::setContainer(
         ->alias(ViewInterface::class, View::class)
         ->alias(ViewEngineInterface::class, ViewEngine::class)
         ->singleton(ConfigInterface::class, static function () {
-            $values = array_merge_recursive(
-                (@include app_path('config.dist.php')) ?: [],
-                (@include app_path('config.php')) ?: [],
-            );
-
-            return (new Config())->load($values);
+            return (new Config())
+                ->load((@include app_path('config.dist.php')) ?: [])
+                ->load((@include app_path('config.php')) ?: []);
         })
         ->singleton(RouterInterface::class)
 );
