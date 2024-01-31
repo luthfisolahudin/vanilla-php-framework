@@ -51,6 +51,40 @@ if (! \function_exists('view')) {
     }
 }
 
+if (! \function_exists('e')) {
+    /**
+     * @see https://securinglaravel.com/p/security-tip-escape-output-with-e
+     * @see https://github.com/laravel/framework/blob/10.x/src/Illuminate/Support/helpers.php#L102-L126
+     */
+    function e(mixed $value, bool $doubleEncode = true): string
+    {
+        return htmlspecialchars((string) $value, \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8', $doubleEncode);
+    }
+}
+
+if (! \function_exists('sanitize')) {
+    function sanitize(mixed $value): bool|int|string|null
+    {
+        if (null === $value || \is_int($value) || \is_bool($value)) {
+            return $value;
+        }
+
+        if ('' === $sanitized = trim(filter_var((string) $value, \FILTER_SANITIZE_STRING))) {
+            return null;
+        }
+
+        if (null !== $value = filter_var($sanitized, \FILTER_VALIDATE_INT, \FILTER_NULL_ON_FAILURE)) {
+            return $value;
+        }
+
+        if (null !== $value = filter_var($sanitized, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE)) {
+            return $value;
+        }
+
+        return $sanitized;
+    }
+}
+
 if (! \function_exists('arr')) {
     function arr(array $values = []): Arr
     {
