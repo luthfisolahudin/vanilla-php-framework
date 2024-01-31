@@ -8,6 +8,8 @@ use Sys\Http\Status;
 
 interface RouterInterface
 {
+    public const METHOD_OVERRIDE = '__method__';
+
     public function add(string $method, string $uri, string $controller, array $middlewares = []): static;
 
     public function get(string $uri, string $controller, array $middlewares = []): static;

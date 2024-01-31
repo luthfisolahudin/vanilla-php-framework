@@ -22,6 +22,6 @@ require BASE_PATH.'/bootstrap.php';
 require BASE_PATH.'/app/routes.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+$method = $_POST[RouterInterface::METHOD_OVERRIDE] ?? $_SERVER['REQUEST_METHOD'];
 
 App::container()->get(RouterInterface::class)->handle($uri, $method);
