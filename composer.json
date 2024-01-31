@@ -13,6 +13,7 @@
         "php": "^8.0",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-session": "*",
         "ext-spl": "*"
     },
     "require-dev": {
