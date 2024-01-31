@@ -6,7 +6,7 @@ namespace Sys\Config;
 
 interface ConfigInterface
 {
-    public function load(array $values): static;
+    public function load(array $values, bool $recursive = true): static;
 
     public function set(string $key, mixed $value): static;
 
