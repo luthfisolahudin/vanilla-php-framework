@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Sys\App;
 use Sys\Config\ConfigInterface;
 use Sys\Http\Router\RouterInterface;
+use Sys\Support\Arr;
 use Sys\View\ViewInterface;
 
 if (! \function_exists('base_path')) {
@@ -47,5 +48,12 @@ if (! \function_exists('view')) {
     function view(): ViewInterface
     {
         return App::container()->get(ViewInterface::class);
+    }
+}
+
+if (! \function_exists('arr')) {
+    function arr(array $values = []): Arr
+    {
+        return Arr::of($values);
     }
 }
