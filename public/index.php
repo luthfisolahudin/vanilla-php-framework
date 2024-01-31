@@ -14,7 +14,7 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-// Op
+// Optionally load vendor
 @include BASE_PATH.'/vendor/autoload.php';
 require BASE_PATH.'/sys/autoload.php';
 require BASE_PATH.'/bootstrap.php';
