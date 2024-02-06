@@ -13,13 +13,18 @@ class AuthenticatedMiddleware implements MiddlewareInterface
         protected ConfigInterface $config,
     ) {}
 
+    protected function path(): string
+    {
+        return $this->config->get('middleware.auth.redirect', '/');
+    }
+
     public function __invoke(RequestInterface $request): bool
     {
         if ($request->isAuthenticated()) {
             return true;
         }
 
-        $request->redirect($this->config->get('middleware.auth.redirect', '/'));
+        $request->redirect($this->path());
 
         return false;
     }
