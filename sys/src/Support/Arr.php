@@ -98,14 +98,14 @@ class Arr implements \ArrayAccess, \JsonSerializable
 
     public function merge(array ...$values): static
     {
-        $this->values = array_merge($values);
+        $this->values = array_merge($this->values, ...$values);
 
         return $this;
     }
 
     public function mergeRecursive(array ...$values): static
     {
-        $this->values = array_merge_recursive($values);
+        $this->values = array_merge_recursive($this->values, ...$values);
 
         return $this;
     }
