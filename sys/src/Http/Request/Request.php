@@ -22,8 +22,8 @@ class Request implements RequestInterface
         ?string $method = null,
         ?string $uri = null,
     ) {
-        $this->method = $method ?? static::getMethod();
-        $this->uri = $uri ?? static::getUri();
+        $this->method = $method ?: static::getMethod();
+        $this->uri = $uri ?: static::getUri();
     }
 
     public function method(): string

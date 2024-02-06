@@ -17,7 +17,7 @@
     >
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title><?= $v->persist('title') ?? config()->get('app.name', 'Vanilla PHP'); ?></title>
+    <title><?= $v->persist('title') ?: config()->get('app.name', 'Vanilla PHP'); ?></title>
 </head>
 <body>
     <?= $slot; ?>
