@@ -8,16 +8,14 @@ use Sys\Config\ConfigInterface;
 use Sys\Http\Request\RequestInterface;
 use Sys\Http\Status;
 
-class ErrorController extends BaseController
+class ErrorController implements ControllerInterface
 {
     public function __construct(
         protected RequestInterface $request,
         protected ConfigInterface $config,
-    ) {
-        parent::__construct($request);
-    }
+    ) {}
 
-    public function __invoke()
+    public function __invoke(): string
     {
         $code = http_response_code();
 

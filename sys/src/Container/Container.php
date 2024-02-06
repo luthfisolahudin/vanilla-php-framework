@@ -12,7 +12,9 @@ class Container implements ContainerInterface
 
     protected array $singleton = [];
 
-    protected array $alias = [];
+    protected array $instances = [];
+
+    protected array $aliases = [];
 
     public function bind(string $key, \Closure $resolver): static
     {
@@ -28,14 +30,18 @@ class Container implements ContainerInterface
     public function singleton(string $key, ?\Closure $resolver = null): static
     {
         $key = $this->getAlias($key);
-        $this->singleton[$key] = null !== $resolver ? $resolver() : $this->get($key);
+        $this->singleton[] = $key;
+
+        if (null !== $resolver) {
+            $this->bind($key, $resolver);
+        }
 
         return $this;
     }
 
     public function alias(string $key, string $actual): static
     {
-        $this->alias[$key] = $actual;
+        $this->aliases[$key] = $actual;
 
         return $this;
     }
@@ -48,41 +54,47 @@ class Container implements ContainerInterface
      * @throws \ReflectionException
      * @throws TypeResolutionException
      */
-    public function get(string $key): mixed
+    public function get(string $key, array $params = []): mixed
     {
         $key = $this->getAlias($key);
 
-        if ($this->isSingleton($key)) {
-            return $this->singleton[$key];
+        if (\array_key_exists($key, $this->instances)) {
+            return $this->instances[$key];
         }
 
         if (! $this->has($key)) {
-            $this->resolvers[$key] = $this->createResolver($key);
+            $this->resolvers[$key] = $this->createResolver($key, $params);
         }
 
-        return $this->resolvers[$key]();
+        $instance = $this->resolvers[$key]();
+
+        if ($this->isSingleton($key)) {
+            $this->instances[$key] = $instance;
+        }
+
+        return $instance;
     }
 
     public function getAlias(string $key): string
     {
-        return $this->alias[$key] ?? $key;
+        return $this->aliases[$key] ?? $key;
     }
 
     public function has(string $key): bool
     {
-        return \array_key_exists($this->getAlias($key), $this->resolvers) || $this->isSingleton($key);
+        return \array_key_exists($this->getAlias($key), $this->resolvers);
     }
 
     public function isSingleton(string $key): bool
     {
-        return \array_key_exists($this->getAlias($key), $this->singleton);
+        return \in_array($this->getAlias($key), $this->singleton);
     }
 
     /**
      * @throws \ReflectionException
      * @throws TypeResolutionException
      */
-    protected function createResolver(string $type): object
+    protected function createResolver(string $type, array $params = []): object
     {
         if (! $this->isInstantiatable($type)) {
             throw new TypeResolutionException("{$type} is not instantiatable");
@@ -99,13 +111,33 @@ class Container implements ContainerInterface
             throw new TypeResolutionException("Couldn't initiate {$type}, constructor not public");
         }
 
-        $params = [];
+        $dependencies = [];
 
         foreach ($constructor->getParameters() as $parameter) {
-            $params[] = $this->get((string) $parameter->getType());
+            $paramType = $parameter->getType();
+
+            if (\array_key_exists($paramType->getName(), $params)) {
+                $dependencies[] = $params[$paramType->getName()];
+
+                continue;
+            }
+
+            if (! $this->isInstantiatable((string) $paramType)) {
+                if ($parameter->isDefaultValueAvailable()) {
+                    $dependencies[] = $parameter->getDefaultValue();
+
+                    continue;
+                } elseif ($paramType->allowsNull()) {
+                    $dependencies[] = null;
+
+                    continue;
+                }
+            }
+
+            $dependencies[] = $this->get((string) $paramType);
         }
 
-        return fn () => new $type(...$params);
+        return fn () => new $type(...$dependencies);
     }
 
     protected function isInstantiatable(string $type): bool

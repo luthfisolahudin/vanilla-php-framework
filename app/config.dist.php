@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Sys\Http\Middleware\CsrfMiddleware;
+
 return [
     'app' => [
         'name' => 'Vanilla PHP',
@@ -18,6 +20,11 @@ return [
         'dbname' => 'vanilla_php',
         'username' => 'root',
         'password' => '',
+    ],
+
+    // global middleware
+    'middlewares' => [
+        CsrfMiddleware::class,
     ],
 
     'views' => [

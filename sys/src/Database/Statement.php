@@ -41,9 +41,4 @@ class Statement implements StatementInterface
 
         return $this->map::fromDatabase($values);
     }
-
-    public static function fromPdo(\PDOStatement $statement): static
-    {
-        return new static($statement);
-    }
 }

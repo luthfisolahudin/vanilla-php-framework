@@ -6,7 +6,7 @@ namespace Sys\Http\Session;
 
 class Session implements SessionInterface
 {
-    public function get(string $key, mixed $default = null): bool|int|string|null
+    public function get(string $key, mixed $default = null): mixed
     {
         return sanitize($_SESSION[static::FLASH_KEY][$key] ?? $_SESSION[$key] ?? $default);
     }
@@ -18,7 +18,7 @@ class Session implements SessionInterface
         return $this;
     }
 
-    public function unset(string $key): bool|int|string|null
+    public function unset(string $key): mixed
     {
         $value = $this->get($key);
 
@@ -34,7 +34,7 @@ class Session implements SessionInterface
         return $this;
     }
 
-    public function unflash(?string $key = null): bool|int|string|null
+    public function unflash(?string $key = null): mixed
     {
         if (null === $key) {
             return $this->unset(static::FLASH_KEY);
@@ -43,6 +43,24 @@ class Session implements SessionInterface
         $value = sanitize($_SESSION[static::FLASH_KEY][$key] ?? null);
 
         unset($_SESSION[static::FLASH_KEY][$key]);
+
+        return $value;
+    }
+
+    public function token(): string
+    {
+        if (null !== $value = $this->get(static::TOKEN_KEY)) {
+            return $value;
+        }
+
+        $this->set(static::TOKEN_KEY, $value = $this->generateToken());
+
+        return $value;
+    }
+
+    public function regenerateToken(): string
+    {
+        $this->set(static::TOKEN_KEY, $value = $this->generateToken());
 
         return $value;
     }
@@ -58,5 +76,17 @@ class Session implements SessionInterface
 
         session_destroy();
         session_regenerate_id(true);
+    }
+
+    protected function generateToken(int $minLength = 256): string
+    {
+        $token = '';
+
+        while (\strlen($token) < $minLength) {
+            $random = base64_encode((string) random_int(0, mt_getrandmax()));
+            $token .= preg_replace('/[^[:alnum:]]/', '', $random);
+        }
+
+        return $token;
     }
 }

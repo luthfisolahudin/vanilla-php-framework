@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Sys\Http\Router;
 
-use Sys\App;
 use Sys\Config\ConfigInterface;
 use Sys\Http\Controller\ErrorController;
 use Sys\Http\Request\Method;
+use Sys\Http\Request\RequestInterface;
 use Sys\Http\Router\Exception\MiddlewareException;
 use Sys\Http\Status;
 
@@ -68,25 +68,26 @@ class Router implements RouterInterface
     /**
      * @throws MiddlewareException
      */
-    public function handle(string $uri, string $method): void
+    public function handle(RequestInterface $request): void
     {
-        if (! $this->has($uri)) {
+        if (! $this->has($request->uri())) {
             $this->abort();
 
             return;
         }
 
-        if (! $this->has($uri, $method)) {
+        if (! $this->has($request->uri(), $request->method())) {
             $this->abort(Status::METHOD_NOT_ALLOWED);
 
             return;
         }
 
-        $route = $this->routes[$uri][$method];
-        $controller = App::container()->get($route['controller']);
+        $route = $this->routes[$request->uri()][$request->method()];
+        $controller = container()->get($route['controller']);
+        $middlewares = [...$this->config->get('middlewares'), ...$route['middlewares']];
 
-        foreach ($route['middlewares'] as $middleware) {
-            $pass = App::container()->get($middleware)($controller->request());
+        foreach ($middlewares as $middleware) {
+            $pass = container()->get($middleware)($request);
 
             if (true === $pass) {
                 continue;
@@ -108,7 +109,7 @@ class Router implements RouterInterface
     {
         http_response_code($code);
 
-        echo App::container()->get($this->abortController($code))();
+        echo container()->get($this->abortController($code))();
 
         exit();
     }

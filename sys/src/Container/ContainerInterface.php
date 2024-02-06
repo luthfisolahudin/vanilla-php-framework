@@ -12,7 +12,7 @@ interface ContainerInterface
 
     public function alias(string $key, string $actual): static;
 
-    public function get(string $key): mixed;
+    public function get(string $key, array $params = []): mixed;
 
     public function getAlias(string $key): string;
 

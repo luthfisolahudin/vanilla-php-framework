@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sys\Database;
 
-use Sys\App;
 use Sys\Config\ConfigInterface;
 
 class Database implements DatabaseInterface
@@ -21,7 +20,7 @@ class Database implements DatabaseInterface
 
         $statement->execute($params);
 
-        return App::container()->getAlias(StatementInterface::class)::fromPdo($statement);
+        return container()->get(StatementInterface::class, compact('statement'));
     }
 
     public function connection(): \PDO

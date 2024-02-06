@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Sys\Http\Router;
 
+use Sys\Http\Request\RequestInterface;
 use Sys\Http\Status;
 
 interface RouterInterface
 {
-    public const METHOD_OVERRIDE = '__method__';
-
     public function add(string $method, string $uri, string $controller, array $middlewares = []): static;
 
     public function get(string $uri, string $controller, array $middlewares = []): static;
@@ -24,7 +23,7 @@ interface RouterInterface
 
     public function has(string $uri, ?string $method = null): bool;
 
-    public function handle(string $uri, string $method): void;
+    public function handle(RequestInterface $request): void;
 
     public function abort(int $code = Status::NOT_FOUND): void;
 }

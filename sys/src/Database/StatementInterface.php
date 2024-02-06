@@ -11,6 +11,4 @@ interface StatementInterface
     public function get(): array|Mappable;
 
     public function fetch(): array|Mappable|null;
-
-    public static function fromPdo(\PDOStatement $statement): static;
 }

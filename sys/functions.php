@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 use Sys\App;
 use Sys\Config\ConfigInterface;
+use Sys\Container\ContainerInterface;
+use Sys\Http\Request\RequestInterface;
 use Sys\Http\Router\RouterInterface;
+use Sys\Http\Session\SessionInterface;
 use Sys\Support\Arr;
+use Sys\Support\Csrf;
 use Sys\View\ViewInterface;
 
 if (! \function_exists('base_path')) {
@@ -30,24 +34,45 @@ if (! \function_exists('app_path')) {
     }
 }
 
+if (! \function_exists('container')) {
+    function container(): ContainerInterface
+    {
+        return App::container();
+    }
+}
+
 if (! \function_exists('config')) {
     function config(): ConfigInterface
     {
-        return App::container()->get(ConfigInterface::class);
+        return container()->get(ConfigInterface::class);
+    }
+}
+
+if (! \function_exists('session')) {
+    function session(): SessionInterface
+    {
+        return container()->get(SessionInterface::class);
     }
 }
 
 if (! \function_exists('router')) {
     function router(): RouterInterface
     {
-        return App::container()->get(RouterInterface::class);
+        return container()->get(RouterInterface::class);
+    }
+}
+
+if (! \function_exists('request')) {
+    function request(): RequestInterface
+    {
+        return container()->get(RequestInterface::class);
     }
 }
 
 if (! \function_exists('view')) {
     function view(): ViewInterface
     {
-        return App::container()->get(ViewInterface::class);
+        return container()->get(ViewInterface::class);
     }
 }
 
@@ -63,13 +88,13 @@ if (! \function_exists('e')) {
 }
 
 if (! \function_exists('sanitize')) {
-    function sanitize(mixed $value): bool|int|string|null
+    function sanitize(mixed $value): mixed
     {
-        if (null === $value || \is_int($value) || \is_bool($value)) {
+        if (! \is_string($value)) {
             return $value;
         }
 
-        if ('' === $sanitized = trim(filter_var((string) $value, \FILTER_SANITIZE_STRING))) {
+        if ('' === $sanitized = trim(filter_var($value, \FILTER_SANITIZE_STRING))) {
             return null;
         }
 
@@ -89,5 +114,12 @@ if (! \function_exists('arr')) {
     function arr(array $values = []): Arr
     {
         return Arr::of($values);
+    }
+}
+
+if (! \function_exists('csrf')) {
+    function csrf(): string
+    {
+        return Csrf::render();
     }
 }

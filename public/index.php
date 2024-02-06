@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use Sys\App;
-use Sys\Http\Router\RouterInterface;
-
 \define('BASE_PATH', \dirname(__DIR__));
 
 mb_internal_encoding('UTF-8');
@@ -21,7 +18,4 @@ require BASE_PATH.'/bootstrap.php';
 
 require BASE_PATH.'/app/routes.php';
 
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-$method = $_POST[RouterInterface::METHOD_OVERRIDE] ?? $_SERVER['REQUEST_METHOD'];
-
-App::container()->get(RouterInterface::class)->handle($uri, $method);
+router()->handle(request());
