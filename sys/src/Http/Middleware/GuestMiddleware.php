@@ -20,7 +20,7 @@ class GuestMiddleware implements MiddlewareInterface
 
     public function __invoke(RequestInterface $request): bool
     {
-        if ($request->isAuthenticated()) {
+        if (! $request->isAuthenticated()) {
             return true;
         }
 
