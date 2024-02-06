@@ -27,11 +27,11 @@ class ErrorController implements ControllerInterface
 
     protected function view(int $code): string
     {
-        if ($view = $this->config->get("views.errors.{$code}")) {
+        if ($view = $this->config->get("view.errors.{$code}")) {
             return $view;
         }
 
-        if ($view = $this->config->get('views.errors.any')) {
+        if ($view = $this->config->get('view.errors.any')) {
             return $view;
         }
 

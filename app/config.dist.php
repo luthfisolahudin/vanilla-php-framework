@@ -29,7 +29,7 @@ return [
         'guest' => ['redirect' => '/home'],
     ],
 
-    'views' => [
+    'view' => [
         'default' => app_path('views'),
         'errors' => [
             'any' => app_path('views/error/any'),
