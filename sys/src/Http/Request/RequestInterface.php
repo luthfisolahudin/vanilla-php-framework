@@ -26,5 +26,7 @@ interface RequestInterface
 
     public function session(): SessionInterface;
 
+    public function redirect(string $path, int $code = Status::NOT_FOUND): void;
+
     public function abort(int $code = Status::NOT_FOUND): void;
 }

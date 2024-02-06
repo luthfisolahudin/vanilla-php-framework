@@ -84,7 +84,7 @@ class Router implements RouterInterface
 
         $route = $this->routes[$request->uri()][$request->method()];
         $controller = container()->get($route['controller']);
-        $middlewares = [...$this->config->get('middlewares'), ...$route['middlewares']];
+        $middlewares = [...$this->config->get('middleware.default', []), ...$route['middlewares']];
 
         foreach ($middlewares as $middleware) {
             $pass = container()->get($middleware)($request);

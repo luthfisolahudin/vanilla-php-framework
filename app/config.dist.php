@@ -23,8 +23,10 @@ return [
     ],
 
     // global middleware
-    'middlewares' => [
-        CsrfMiddleware::class,
+    'middleware' => [
+        'default' => [CsrfMiddleware::class],
+        'auth' => ['redirect' => '/login'],
+        'guest' => ['redirect' => '/home'],
     ],
 
     'views' => [
