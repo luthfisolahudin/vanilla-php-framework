@@ -61,6 +61,11 @@ class Request implements RequestInterface
         return $this->session;
     }
 
+    public function redirect(string $path, int $code = Status::FOUND): void
+    {
+        $this->router->redirect($path, $code);
+    }
+
     public function abort(int $code = Status::NOT_FOUND): void
     {
         $this->router->abort($code);

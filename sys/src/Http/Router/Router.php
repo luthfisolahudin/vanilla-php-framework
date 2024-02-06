@@ -105,6 +105,14 @@ class Router implements RouterInterface
         echo $controller();
     }
 
+    public function redirect(string $path, int $code = Status::FOUND): void
+    {
+        http_response_code($code);
+        header("Location: {$path}");
+
+        exit();
+    }
+
     public function abort(int $code = Status::NOT_FOUND): void
     {
         http_response_code($code);

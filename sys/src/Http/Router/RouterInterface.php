@@ -25,5 +25,7 @@ interface RouterInterface
 
     public function handle(RequestInterface $request): void;
 
+    public function redirect(string $path, int $code = Status::FOUND): void;
+
     public function abort(int $code = Status::NOT_FOUND): void;
 }

@@ -29,6 +29,11 @@ final class Status
     public const MOVED_PERMANENTLY = 301;
 
     /**
+     * @see https://tools.ietf.org/html/rfc7231#section-6.4.3
+     */
+    public const FOUND = 302;
+
+    /**
      * @see https://tools.ietf.org/html/rfc7231#section-6.4.7
      */
     public const TEMPORARY_REDIRECT = 307;
@@ -86,6 +91,7 @@ final class Status
         self::CREATED => 'Created',
         self::NO_CONTENT => 'No Content',
         self::MOVED_PERMANENTLY => 'Moved Permanently',
+        self::FOUND => 'Found',
         self::TEMPORARY_REDIRECT => 'Temporary Redirect',
         self::PERMANENT_REDIRECT => 'Permanent Redirect',
         self::BAD_REQUEST => 'Bad Request',
