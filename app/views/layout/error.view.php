@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @see https://github.com/laravel/framework/blob/10.x/src/Illuminate/Foundation/Exceptions/views/minimal.blade.php
- *
  * @var Sys\View\ViewEngineInterface $v
+ *
+ * @see https://github.com/laravel/framework/blob/10.x/src/Illuminate/Foundation/Exceptions/views/minimal.blade.php
  */
 
 ?>

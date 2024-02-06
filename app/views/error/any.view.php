@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 /**
  * @var Sys\View\ViewEngineInterface $v
+ * @var int                          $code
+ * @var string                       $text
+ *
+ * @see Sys\Http\Status
  */
 
 $v->extends('layout/error');

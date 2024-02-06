@@ -2,6 +2,7 @@
 
 /**
  * @var Sys\View\ViewEngineInterface $v
+ * @var string                       $slot
  */
 
 ?>
